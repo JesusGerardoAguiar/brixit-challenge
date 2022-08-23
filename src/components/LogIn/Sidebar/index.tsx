@@ -6,14 +6,16 @@ import React from "react";
 type SidebarProps = {
   loginFormData: { email: string; password: string };
   handleUpdate: Function;
+  handleLogin: Function;
+  isLoading: boolean;
 };
 
 const Sidebar = (props: SidebarProps) => {
-  const { loginFormData, handleUpdate } = props;
+  const { loginFormData, handleUpdate, handleLogin, isLoading } = props;
 
   const disabledButtonIfEmailAndPasswordAreEmpty = () =>
     loginFormData.password === "" || loginFormData.email === "";
-    
+
   return (
     <ColumnDiv>
       <h1>Log In To Your Account</h1>
@@ -54,9 +56,16 @@ const Sidebar = (props: SidebarProps) => {
           />
         </Label>
       </Fieldset>
-      <Button disabled={disabledButtonIfEmailAndPasswordAreEmpty()}>
-        Log In
-      </Button>
+      {!isLoading ? (
+        <Button
+          disabled={disabledButtonIfEmailAndPasswordAreEmpty()}
+          onClick={() => handleLogin()}
+        >
+          Log In
+        </Button>
+      ) : (
+        <p>loading...</p>
+      )}
     </ColumnDiv>
   );
 };
@@ -64,6 +73,8 @@ const Sidebar = (props: SidebarProps) => {
 Sidebar.propTypes = {
   loginFormData: PropTypes.object,
   handleUpdate: PropTypes.func,
+  handleLogin: PropTypes.func,
+  isLoading: PropTypes.bool,
 };
 
 export default Sidebar;
