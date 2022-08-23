@@ -1,43 +1,69 @@
 import { ColumnDiv, Fieldset, Label, Input } from "./style";
-import Button from '../../Button';
-const Sidebar = () => {
+import PropTypes from "prop-types";
+import Button from "../../Button";
+import React from "react";
+
+type SidebarProps = {
+  loginFormData: { email: string; password: string };
+  handleUpdate: Function;
+};
+
+const Sidebar = (props: SidebarProps) => {
+  const { loginFormData, handleUpdate } = props;
+
+  const disabledButtonIfEmailAndPasswordAreEmpty = () =>
+    loginFormData.password === "" || loginFormData.email === "";
+    
   return (
     <ColumnDiv>
       <h1>Log In To Your Account</h1>
       <Fieldset>
-        <Label htmlFor="username" id="usernameLabel">
+        <Label htmlFor="email" id="emailLabel">
           Email Address
           <Input
             error={false}
-            name="username"
+            name="email"
             type="text"
             required={true}
             placeholder=""
-            id="username"
+            id="email"
             aria-invalid="false"
-            value=""
+            value={loginFormData.email}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleUpdate(e)
+            }
           />
         </Label>
       </Fieldset>
       <Fieldset>
-        <Label htmlFor="username" id="usernameLabel">
-         Password
+        <Label htmlFor="password" id="passwordLabel">
+          Password
           <Input
             error={false}
-            disabled={true}
-            name="username"
-            type="text"
+            disabled={loginFormData.email === ""}
+            name="password"
+            type="password"
             required={true}
             placeholder=""
-            id="username"
+            id="password"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleUpdate(e)
+            }
             aria-invalid="false"
-            value=""
+            value={loginFormData.password}
           />
         </Label>
       </Fieldset>
-      <Button      disabled={true}>Log In</Button>
+      <Button disabled={disabledButtonIfEmailAndPasswordAreEmpty()}>
+        Log In
+      </Button>
     </ColumnDiv>
   );
+};
+
+Sidebar.propTypes = {
+  loginFormData: PropTypes.object,
+  handleUpdate: PropTypes.func,
 };
 
 export default Sidebar;
