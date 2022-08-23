@@ -2,16 +2,26 @@ import { ColumnDiv, Fieldset, Label, Input } from "./style";
 import PropTypes from "prop-types";
 import Button from "../../Button";
 import React from "react";
+import Spinner from "../../Spinner";
 
 type SidebarProps = {
   loginFormData: { email: string; password: string };
   handleUpdate: Function;
   handleLogin: Function;
   isLoading: boolean;
+  isError: boolean;
+  error: string;
 };
 
 const Sidebar = (props: SidebarProps) => {
-  const { loginFormData, handleUpdate, handleLogin, isLoading } = props;
+  const {
+    loginFormData,
+    handleUpdate,
+    handleLogin,
+    isLoading,
+    isError,
+    error,
+  } = props;
 
   const disabledButtonIfEmailAndPasswordAreEmpty = () =>
     loginFormData.password === "" || loginFormData.email === "";
@@ -23,7 +33,7 @@ const Sidebar = (props: SidebarProps) => {
         <Label htmlFor="email" id="emailLabel">
           Email Address
           <Input
-            error={false}
+            error={isError}
             name="email"
             type="text"
             required={true}
@@ -41,7 +51,7 @@ const Sidebar = (props: SidebarProps) => {
         <Label htmlFor="password" id="passwordLabel">
           Password
           <Input
-            error={false}
+            error={isError}
             disabled={loginFormData.email === ""}
             name="password"
             type="password"
@@ -64,8 +74,9 @@ const Sidebar = (props: SidebarProps) => {
           Log In
         </Button>
       ) : (
-        <p>loading...</p>
+        <Spinner />
       )}
+      {isError ? <p style={{ color: "red" }}>*{error}</p> : <></>}
     </ColumnDiv>
   );
 };
@@ -75,6 +86,8 @@ Sidebar.propTypes = {
   handleUpdate: PropTypes.func,
   handleLogin: PropTypes.func,
   isLoading: PropTypes.bool,
+  isError: PropTypes.bool,
+  error: PropTypes.string,
 };
 
 export default Sidebar;
