@@ -1,7 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import UserProfile from "../components/Profile";
+import { useContext, useState } from "react";
+import { UserInfoContext } from "../../context";
 const Profile: NextPage = () => {
+  const userInfo = useContext(UserInfoContext);
+
   return (
     <>
       <Head>
@@ -10,11 +14,7 @@ const Profile: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <UserProfile
-        profileData={{
-          email: "aguiarf.j16@gmail.com",
-          username: "jesusaguiar",
-          age: "24",
-        }}
+        profileData={userInfo}
       />
     </>
   );
