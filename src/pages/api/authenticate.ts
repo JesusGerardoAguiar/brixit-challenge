@@ -18,11 +18,13 @@ export default async function handler(
       where: { OR: [{ email }] },
     });
     if (email === user?.email && password === user?.password) {
+      res.setHeader("Content-Type", "text/html");
       res.status(200).json({
         jwt: jwt.sign({ email }, "KASODMDMASKD;LASDA;LDSKQPKDALSD"),
         message: "",
       });
     }
+    res.setHeader("Content-Type", "text/html");
     res.status(404).json({ message: "user not found", jwt: "" });
   }
 }
