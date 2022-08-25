@@ -23,8 +23,10 @@ export default async function handler(
         jwt: jwt.sign({ email }, "KASODMDMASKD;LASDA;LDSKQPKDALSD"),
         message: "",
       });
+    }else{
+      res.setHeader("Content-Type", "text/html");
+      res.status(404).json({ message: "user not found", jwt: "" });
+
     }
-    res.setHeader("Content-Type", "text/html");
-    res.status(404).json({ message: "user not found", jwt: "" });
   }
 }
