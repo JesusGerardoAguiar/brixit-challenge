@@ -7,42 +7,13 @@ import { useRouter } from "next/router";
 import { UserInfoContext } from "../../context";
 import { useQuery } from "react-query";
 import * as Services from "../services";
+import useReAuth from '../hooks/useReAuth';
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
-  const [userAuth, setUserAuth] = useState({
-    id: "",
-    avatar: "",
-    age: 0,
-    email: "",
-    name: "",
-    role: "admin",
-    surname: "",
-  });
-  const router = useRouter();
+  const userAuth = useReAuth();
   
  
 
-  const getUserInfo = async () => {
-    Services.getUserInfo(localStorage.getItem("jwttoken") || "").then(
-      (data) => {
-        if (data.data.user) {
-          setUserAuth({ ...data.data.user });
-          router.push("/profile");
-        }
-      }
-    );
-  };
-
-  useEffect(() => {
-    console.log("once");
-    if (!localStorage.getItem("jwttoken")) {
-      router.push("/");
-    } else {
-      getUserInfo();
-    }
-  }, []);
-
-  // useEffect(() => {},[isSuccess, data])
   return (
     <QueryClientProvider client={queryClient}>
       <UserInfoContext.Provider value={{ ...userAuth }}>

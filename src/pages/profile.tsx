@@ -3,9 +3,9 @@ import Head from "next/head";
 import UserProfile from "../components/Profile";
 import { useContext, useState } from "react";
 import { UserInfoContext } from "../../context";
+import userReAuth from "../hooks/useReAuth";
 const Profile: NextPage = () => {
-  const userInfo = useContext(UserInfoContext);
-
+  const userAuth = userReAuth();
   return (
     <>
       <Head>
@@ -14,7 +14,7 @@ const Profile: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <UserProfile
-        profileData={userInfo}
+        profileData={userAuth}
       />
     </>
   );
