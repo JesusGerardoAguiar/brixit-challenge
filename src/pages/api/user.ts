@@ -23,12 +23,12 @@ export default async function handler(
       });
       if (user) {
         res.setHeader("Content-Type", "text/html");
-        res.status(200).json({ user: user, message: "User Found" });
+       return  res.status(200).json({ user: user, message: "User Found" });
       }
     }else{
 
       res.setHeader("Content-Type", "text/html");
-      res.status(404).json({ user: {}, message: "User Not Found" });
+      return res.status(404).json({ user: {}, message: "User Not Found" });
     }
   }
 }
