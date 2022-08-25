@@ -26,7 +26,7 @@ const Login: NextPage = () => {
   useEffect(() => {
     if (isSuccess) {
       localStorage.setItem("jwttoken", data.data.jwt);
-     
+
       router.push("/profile");
     }
   }, [isSuccess, data]);
@@ -34,6 +34,10 @@ const Login: NextPage = () => {
   const handleLogin = () => {
     refetch();
   };
+  let errorMessage = "";
+  if (error) {
+    errorMessage = (error as any).response.data.message;
+  }
   return (
     <>
       <Head>
@@ -49,7 +53,7 @@ const Login: NextPage = () => {
           handleLogin={handleLogin}
           isLoading={isLoading}
           isError={isError}
-          error={error?.response?.data.message}
+          error={errorMessage}
         />
         <Background />
       </Container>
