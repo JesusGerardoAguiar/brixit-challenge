@@ -6,7 +6,7 @@ import Sidebar from "../components/LogIn/Sidebar";
 import { useQuery } from "react-query";
 import * as Services from "../services";
 import { useRouter } from "next/router";
-import userReAuth from "../hooks/useReAuth";
+
 const Login: NextPage = () => {
   const [loginFormData, setFormData] = useState({ email: "", password: "" });
   const router = useRouter();
@@ -26,6 +26,7 @@ const Login: NextPage = () => {
   useEffect(() => {
     if (isSuccess) {
       localStorage.setItem("jwttoken", data.data.jwt);
+     
       router.push("/profile");
     }
   }, [isSuccess, data]);

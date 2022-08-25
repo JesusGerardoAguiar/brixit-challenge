@@ -1,25 +1,45 @@
 import "../styles/global.css";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import type { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { useRouter } from "next/router";
-import { UserInfoContext } from "../../context";
-import { useQuery } from "react-query";
-import * as Services from "../services";
-import useReAuth from '../hooks/useReAuth';
+
+import useSession from "../hooks/useSession";
+import { Toaster } from "react-hot-toast";
+
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
-  const userAuth = useReAuth();
-  
- 
+  useSession();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <UserInfoContext.Provider value={{ ...userAuth }}>
-        <Component {...pageProps} />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </UserInfoContext.Provider>
+      <Component {...pageProps} />
+      <ReactQueryDevtools initialIsOpen={false} />
+      <Toaster
+        position="bottom-center"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+          // Define default options
+          className: "",
+          duration: 5000,
+          style: {
+            background: "#363636",
+            color: "#fff",
+          },
+
+          // Default options for specific types
+          success: {
+            duration: 3000,
+            theme: {
+              primary: "green",
+              secondary: "black",
+            },
+          },
+        }}
+      />
     </QueryClientProvider>
   );
 }

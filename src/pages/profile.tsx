@@ -1,11 +1,9 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import UserProfile from "../components/Profile";
-import { useContext, useState } from "react";
-import { UserInfoContext } from "../../context";
-import userReAuth from "../hooks/useReAuth";
+import useSession from "../hooks/useSession";
 const Profile: NextPage = () => {
-  const userAuth = userReAuth();
+  const userAuth = useSession();
   return (
     <>
       <Head>

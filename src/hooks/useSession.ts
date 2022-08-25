@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import * as Services from "../services";
 import { useRouter } from "next/router";
-const useReAuth = () => {
+import toast from "react-hot-toast";
+const useSession = () => {
   const router = useRouter();
   const [userAuth, setUserAuth] = useState({
     id: "",
@@ -12,19 +13,26 @@ const useReAuth = () => {
     role: "admin",
     surname: "",
   });
+
   const getUserInfo = async () => {
-    Services.getUserInfo(localStorage.getItem("jwttoken") || "").then(
-      (data) => {
+    Services.getUserInfo(localStorage.getItem("jwttoken") || "")
+      .then((data) => {
         if (data.data.user) {
           setUserAuth({ ...data.data.user });
-          router.push("/profile");
+          if (router.pathname !== "/profile") {
+            router.push("/profile");
+            toast.success("Welcome Back!");
+          }
         }
-      }
-    );
+      })
+      .catch(() => {
+        router.push("/");
+        toast.success("Please login again");
+      });
   };
   useEffect(() => {
-    console.log("once");
     if (!localStorage.getItem("jwttoken")) {
+      toast.error("Please, login with your credentials again!");
       router.push("/");
     } else {
       getUserInfo();
@@ -33,4 +41,4 @@ const useReAuth = () => {
   return userAuth;
 };
 
-export default useReAuth
+export default useSession;
