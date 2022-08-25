@@ -1,8 +1,7 @@
 import axios from "axios";
 
 export const login = (loginData: { email: string; password: string }) =>
-  axios
-    .post(`/api/authenticate`, loginData)
+  axios.post(`/api/authenticate`, loginData);
 
-export const getUserInfo = (token: string) => 
-  axios.get(`/api/user?token=${token}`)
+export const getUserInfo = (token: string) =>
+  axios.get(`/api/user`, { headers: {"Authentication": `Bearer ${token}`} });
