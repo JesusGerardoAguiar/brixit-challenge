@@ -16,3 +16,6 @@ React components used by pages or by other react components, all of them has sty
 
  # API
  I chose NextJS for the simple reason that I can make use of the api routes, I could've done an external API, but for two simple request would've been a waste of time and resources in my humble opinion.
+ 
+ # Hosting
+ vercel, vercel is the best, just use it.
