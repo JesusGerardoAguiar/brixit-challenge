@@ -19,3 +19,6 @@ React components used by pages or by other react components, all of them has sty
  
  # Hosting
  vercel, vercel is the best, just use it.
+
+
+You can test the app here https://drixit-challenge.vercel.app/, the users are the same specified in the users file in the challenge repo
